@@ -25,7 +25,7 @@ typedef vector<pair<int, int>> vpii;
 #define fastio() ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL)
 const int M = 1e9 + 7;
 const int P = 1e8 + 10;
-vb isPrime(P, true);
+// vb isPrime(P, true);
 
 /*-------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
@@ -62,7 +62,7 @@ template <class T, class V> void _print(unordered_map <T, V> v) {cerr << "[ "; f
 
 ll binMul(ll a ,ll b){ll ans = 0 ;while(b){if (b&1){ans = (ans+a)%M;}a = (a+a)%M;b>>= 1;}return ans ;}
 ll binExp(ll a, ll b, int m) {a %= m;ll ans = 1;while (b) {if (b & 1) ans = binMul(ans,a);a = binMul(a,a);b = b >> 1;}return ans;}
-void sieve(){isPrime[0]=isPrime[1]=false;for(int i = 2; i*i < P; i++){if(isPrime[i]==true){ for(int j = i * i; j < P; j += i)isPrime[j] = false;}}}
+// void sieve(){isPrime[0]=isPrime[1]=false;for(int i = 2; i*i < P; i++){if(isPrime[i]==true){ for(int j = i * i; j < P; j += i)isPrime[j] = false;}}}
 ll gcd(ll a, ll b) {if (a == 0) return b; return gcd(b % a, a);}
 ll lcm(ll a, ll b) {return ((a * b) / (gcd(a, b)));}
 
@@ -70,15 +70,17 @@ ll lcm(ll a, ll b) {return ((a * b) / (gcd(a, b)));}
 
 const int N=1e5+1;
 vi height(N);
+vi dp(N, -1);
 int k;
 
 int frog(int i) {
     if (i==0) return 0;
+    if (dp[i]!=-1) return dp[i];
     int cost=INT_MAX;
     for (int j=1; j<=k; j++) {
         if (i>j-1) cost=min(cost, frog(i-j)+abs(height[i]-height[i-j]));
     }
-    return cost;
+    return dp[i]=cost;
 }
 
 int main() {
