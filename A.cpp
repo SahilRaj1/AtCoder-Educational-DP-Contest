@@ -68,6 +68,24 @@ ll lcm(ll a, ll b) {return ((a * b) / (gcd(a, b)));}
 
 /*-------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
+const int N=1e5+1;
+vi height(N);
+vi dp(N, -1);
+
+int frog(int i) {
+    if (i==0) return 0;
+    
+    if (dp[i]!=-1) return dp[i];
+
+    int cost=INT_MAX;
+    // way 1
+    cost=min(cost, frog(i-1)+abs(height[i]-height[i-1]));
+    // way 2
+    if (i>1) cost=min(cost, frog(i-2)+abs(height[i]-height[i-2]));
+
+    return dp[i]=cost;
+}
+
 int main() {
 
 #ifndef ONLINE_JUDGE
@@ -77,8 +95,9 @@ int main() {
 #endif
 
     fastio();
-
-    
+    int n; cin>>n;
+    for (int i=0; i<n; i++) cin>>height[i];
+    cout<<frog(n-1)<<endl;
 
     return 0;
 }
